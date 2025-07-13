@@ -42,12 +42,13 @@
       justify-content: center;
       gap: 10px;
       margin: 10px;
+      flex-wrap: wrap;
     }
     .btn {
       padding: 10px 20px;
-      background: #fff4;
+      background: #ffffff66;
       border: 1px solid #fff;
-      color: #fff;
+      color: #000;
       font-weight: bold;
       border-radius: 10px;
       cursor: pointer;
@@ -143,9 +144,10 @@
       document.getElementById('chatInput').value = '';
     };
 
-    // auto play music
     window.onload = () => {
-      document.getElementById("music").play().catch(() => {});
+      const music = document.getElementById("music");
+      music.volume = 0.5;
+      music.play().catch(() => {});
     }
   </script>
 </body>
