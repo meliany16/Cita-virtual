@@ -2,256 +2,151 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Cita Virtual Roblox 5D</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cita Virtual - Meliander & Mikianny</title>
   <style>
-    *{box-sizing:border-box;}
-    body,html{margin:0;padding:0;height:100%;overflow:hidden;
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(180deg, #191919 0%, #2c2c54 100%);
-      color:white; user-select:none;}
-    #game{position:relative;width:100vw;height:100vh;overflow:hidden;
-      background:radial-gradient(circle at center,#6a4c93 30%,#191919 80%);
-      perspective:1000px;}
-    #scene{position:absolute;width:2000px;height:600px;top:calc(50% - 300px);
-      left:50%;transform-style:preserve-3d;transform-origin:center center;
-      background:linear-gradient(to bottom,#445566 0%,#222233 100%);
-      box-shadow:inset 0 0 60px #8e44ad,inset 0 0 30px #6c3483;
-      border-radius:20px;transition:transform 0.3s ease;overflow:visible;}
-    .ground{position:absolute;bottom:0;width:2000px;height:80px;
-      background:linear-gradient(to right,#3a3a5c 0%,#1c1c2c 100%);
-      box-shadow:0 4px 15px #0009;border-radius:0 0 20px 20px;z-index:1;}
-    .light-glow{position:absolute;bottom:80px;width:100px;height:100px;
-      background:radial-gradient(circle,#c16ac7 60%,transparent 90%);
-      filter:blur(15px);opacity:0.7;z-index:2;}
-    .player{position:absolute;width:100px;height:160px;bottom:80px;
-      perspective:800px;cursor:pointer;user-select:none;
-      transition:transform 0.2s ease;z-index:3;filter:drop-shadow(0 5px 3px rgba(0,0,0,0.4));}
-    .name-tag{position:absolute;bottom:170px;width:100%;text-align:center;
-      font-weight:bold;font-size:1.1em;color:#e6d2ff;text-shadow:1px 1px 4px #5b3370;
-      pointer-events:none;user-select:none;letter-spacing:0.05em;}
-    .chat-bubble{position:absolute;bottom:190px;left:50%;transform:translateX(-50%);
-      max-width:180px;background:rgba(255,255,255,0.85);color:#4b2e83;
-      font-weight:600;font-size:0.9em;padding:8px 14px;border-radius:15px;
-      box-shadow:0 2px 8px #311c6e88;opacity:0;transition:opacity 0.3s ease;
-      user-select:none;pointer-events:none;white-space:pre-wrap;word-wrap:break-word;
-      letter-spacing:0.02em;z-index:4;}
-    .chat-bubble.visible{opacity:1;}
-    #controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-      display:flex;gap:20px;z-index:10;}
-    button.control-btn{background:#9b59b6;border:none;border-radius:50%;
-      width:60px;height:60px;font-size:1.8em;color:white;
-      box-shadow:0 4px 12px #6c3483;cursor:pointer;user-select:none;
-      transition:background 0.2s ease;}
-    button.control-btn:active{background:#7d3c98;}
-    #chat-area{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
-      width:90%;max-width:400px;display:flex;gap:10px;z-index:10;}
-    #chat-input{flex-grow:1;border-radius:30px;border:none;padding:12px 20px;
-      font-size:1.1em;outline:none;}
-    #chat-send{background:#9b59b6;border:none;border-radius:30px;color:white;
-      padding:12px 25px;font-weight:bold;font-size:1.1em;cursor:pointer;
-      transition:background 0.2s ease;}
-    #chat-send:active{background:#7d3c98;}
+    body {
+      margin: 0;
+      background: url('https://i.imgur.com/miFFzBT.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 80vh;
+    }
+    .player {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background-size: cover;
+      font-size: 12px;
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+    }
+    #player1 {
+      background-image: url('https://i.imgur.com/oe4iKGe.png');
+      bottom: 50px;
+      left: 30px;
+    }
+    #player2 {
+      background-image: url('https://i.imgur.com/T5iAqy7.png');
+      bottom: 50px;
+      left: 150px;
+    }
+    #controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px;
+    }
+    .btn {
+      padding: 10px 20px;
+      background: #fff4;
+      border: 1px solid #fff;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+    #chatbox {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+    }
+    #chatInput {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+    #chatSend {
+      padding: 10px 20px;
+      font-weight: bold;
+      background: #ffffffaa;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #music {
+      display: none;
+    }
+    .bubble {
+      position: absolute;
+      bottom: 90px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
+  <audio id="music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/21/audio_3848e67191.mp3?filename=romantic-vibes-124386.mp3" type="audio/mpeg">
+  </audio>
 
-<div id="game">
-  <div id="scene">
-    <div class="ground"></div>
-    <div class="light-glow" style="left: 200px;"></div>
-    <div class="light-glow" style="left: 700px; opacity:0.5;"></div>
-
-    <div class="player" id="player1" style="left: 200px; transform: rotateY(0deg);">
-      <div class="name-tag" id="name1">meliander</div>
-      <svg width="100" height="160" viewBox="0 0 64 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="30" fill="#ffdbac"/>
-        <rect x="10" y="60" width="44" height="40" rx="8" fill="#6f42c1"/>
-        <rect x="10" y="60" width="12" height="40" rx="4" fill="#5e359a"/>
-        <rect x="42" y="60" width="12" height="40" rx="4" fill="#5e359a"/>
-        <circle cx="22" cy="25" r="8" fill="#573d2e"/>
-        <circle cx="42" cy="25" r="8" fill="#573d2e"/>
-      </svg>
-      <div class="chat-bubble" id="chat1"></div>
-    </div>
-
-    <div class="player" id="player2" style="left: 700px; transform: rotateY(180deg);">
-      <div class="name-tag" id="name2">mikianny</div>
-      <svg width="100" height="160" viewBox="0 0 64 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="30" fill="#f4c2c2"/>
-        <rect x="10" y="60" width="44" height="40" rx="8" fill="#ff5ca4"/>
-        <rect x="10" y="60" width="12" height="40" rx="4" fill="#e04081"/>
-        <rect x="42" y="60" width="12" height="40" rx="4" fill="#e04081"/>
-        <circle cx="22" cy="25" r="8" fill="#522b2b"/>
-        <circle cx="42" cy="25" r="8" fill="#522b2b"/>
-      </svg>
-      <div class="chat-bubble" id="chat2"></div>
-    </div>
-
+  <div id="game">
+    <div id="player1" class="player">Meliander</div>
+    <div id="player2" class="player">Mikianny</div>
   </div>
-</div>
 
-<div id="controls">
-  <button class="control-btn" id="leftBtn">⬅️</button>
-  <button class="control-btn" id="rightBtn">➡️</button>
-  <button class="control-btn" id="runBtn">🏃‍♂️</button>
-</div>
+  <div id="controls">
+    <button class="btn" onclick="move('player1', -10)">⬅️ Meliander</button>
+    <button class="btn" onclick="move('player1', 10)">Meliander ➡️</button>
+    <button class="btn" onclick="move('player2', -10)">⬅️ Mikianny</button>
+    <button class="btn" onclick="move('player2', 10)">Mikianny ➡️</button>
+  </div>
 
-<div id="chat-area">
-  <input type="text" id="chat-input" placeholder="Escribe aquí..." autocomplete="off" />
-  <button id="chat-send">Enviar</button>
-</div>
+  <div id="chatbox">
+    <input type="text" id="chatInput" placeholder="Escribe algo bonito..." />
+    <button id="chatSend">Enviar</button>
+  </div>
 
-<audio id="music" loop autoplay>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/29/audio_34731db63c.mp3?filename=romantic-piano-8759.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio.
-</audio>
+  <script>
+    const player1 = document.getElementById('player1');
+    const player2 = document.getElementById('player2');
 
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-<script>
-  // -- CONFIGURA TU FIREBASE AQUÍ --
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROYECTO.firebaseapp.com",
-    databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com",
-    projectId: "TU_PROYECTO",
-    storageBucket: "TU_PROYECTO.appspot.com",
-    messagingSenderId: "TU_MENSAJE",
-    appId: "TU_APP_ID"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const playerId = localStorage.getItem('playerId') || Math.random().toString(36).substr(2, 9);
-  localStorage.setItem('playerId', playerId);
-
-  let isPlayer1 = false;
-  let players = {};
-  let playerRef;
-
-  const playersRef = db.ref('players');
-
-  playersRef.once('value', snapshot => {
-    if (!snapshot.hasChild('player1')) {
-      isPlayer1 = true;
-      playerRef = playersRef.child('player1');
-    } else if (!snapshot.hasChild('player2')) {
-      isPlayer1 = false;
-      playerRef = playersRef.child('player2');
-    } else {
-      alert('Ya hay 2 jugadores conectados. Vuelve a intentarlo luego.');
-      throw new Error('Sala llena');
+    function move(playerId, amount) {
+      const player = document.getElementById(playerId);
+      const currentLeft = parseInt(player.style.left || '0');
+      let newLeft = currentLeft + amount;
+      if (newLeft < 0) newLeft = 0;
+      if (newLeft > window.innerWidth - 70) newLeft = window.innerWidth - 70;
+      player.style.left = newLeft + 'px';
     }
 
-    playerRef.set({
-      id: playerId,
-      name: isPlayer1 ? "meliander" : "mikianny",
-      x: isPlayer1 ? 200 : 700,
-      chat: "",
-      facing: isPlayer1 ? 0 : 180
-    });
+    document.getElementById('chatSend').onclick = () => {
+      const text = document.getElementById('chatInput').value.trim();
+      if (!text) return;
 
-    playerRef.onDisconnect().remove();
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = text;
+      const who = Math.random() < 0.5 ? player1 : player2;
+      who.appendChild(bubble);
 
-    listenPlayers();
-  });
-
-  playersRef.on('value', snapshot => {
-    players = snapshot.val() || {};
-    updateScene();
-  });
-
-  function updateScene() {
-    if (players.player1) {
-      updatePlayerDOM('player1', players.player1);
-    }
-    if (players.player2) {
-      updatePlayerDOM('player2', players.player2);
-    }
-    checkHug();
-  }
-
-  function updatePlayerDOM(domId, data) {
-    const el = document.getElementById(domId);
-    el.style.left = data.x + "px";
-    el.style.transform = `rotateY(${data.facing}deg)`;
-    document.getElementById(domId === 'player1' ? 'name1' : 'name2').textContent = data.name || '';
-    const chatBubble = document.getElementById(domId === 'player1' ? 'chat1' : 'chat2');
-    if (data.chat && data.chat.trim() !== "") {
-      chatBubble.textContent = data.chat;
-      chatBubble.classList.add('visible');
       setTimeout(() => {
-        chatBubble.classList.remove('visible');
+        who.removeChild(bubble);
       }, 4000);
-    } else {
-      chatBubble.classList.remove('visible');
+
+      document.getElementById('chatInput').value = '';
+    };
+
+    // auto play music
+    window.onload = () => {
+      document.getElementById("music").play().catch(() => {});
     }
-  }
-
-  function moveLocal(dx, running) {
-    playerRef.once('value').then(snap => {
-      if (!snap.exists()) return;
-      const data = snap.val();
-      let newX = data.x + dx * (running ? 2 : 1);
-      if (newX < 0) newX = 0;
-      if (newX > 1900) newX = 1900;
-      playerRef.update({ 
-        x: newX,
-        facing: dx > 0 ? 0 : 180
-      });
-    });
-  }
-
-  function checkHug() {
-    if (!players.player1 || !players.player2) return;
-    const p1 = players.player1;
-    const p2 = players.player2;
-    const dist = Math.abs(p1.x - p2.x);
-    const p1El = document.getElementById('player1');
-    const p2El = document.getElementById('player2');
-
-    if (dist < 120) {
-      p1El.style.transform = `rotateY(${p1.facing}deg) scale(1.1)`;
-      p2El.style.transform = `rotateY(${p2.facing}deg) scale(1.1)`;
-    } else {
-      p1El.style.transform = `rotateY(${p1.facing}deg)`;
-      p2El.style.transform = `rotateY(${p2.facing}deg)`;
-    }
-  }
-
-  document.getElementById('leftBtn').addEventListener('touchstart', e => {
-    e.preventDefault();
-    moveLocal(-10, false);
-  });
-  document.getElementById('rightBtn').addEventListener('touchstart', e => {
-    e.preventDefault();
-    moveLocal(10, false);
-  });
-  document.getElementById('runBtn').addEventListener('touchstart', e => {
-    e.preventDefault();
-    moveLocal(20, true);
-  });
-
-  document.getElementById('chat-send').addEventListener('click', () => {
-    const text = document.getElementById('chat-input').value.trim();
-    if (text.length === 0) return;
-    playerRef.update({ chat: text });
-    document.getElementById('chat-input').value = '';
-  });
-
-  document.getElementById('chat-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      document.getElementById('chat-send').click();
-    }
-  });
-
-  function listenPlayers() {
-    // Placeholder for future events or extensions
-  }
-</script>
-
+  </script>
 </body>
 </html>
