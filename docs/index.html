@@ -1,126 +1,152 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cita Virtual Mikianny & Meliander</title>
-<style>
-  body {
-    margin: 0; background: linear-gradient(to bottom, #a0d8f7, #fef9f3);
-    font-family: Arial, sans-serif; overflow: hidden;
-  }
-  #game {
-    position: relative; width: 100vw; height: 80vh; background: url('https://i.imgur.com/7YgHcpo.jpg') center/cover no-repeat;
-    border: 3px solid #444; border-radius: 15px; overflow: hidden;
-  }
-  .player {
-    position: absolute; width: 50px; height: 80px; bottom: 10px;
-    background-size: cover; border-radius: 10px;
-    transition: left 0.1s linear, bottom 0.1s linear;
-    font-weight: bold; color: black; text-align: center; user-select: none;
-  }
-  #player1 {
-    background-image: url('https://i.imgur.com/oe4iKGe.png'); /* Chico */
-    left: 20px;
-  }
-  #player2 {
-    background-image: url('https://i.imgur.com/T5iAqy7.png'); /* Chica */
-    left: 100px;
-  }
-  #chat {
-    margin-top: 10px;
-    display: flex; gap: 10px;
-  }
-  #messages {
-    flex: 1; height: 100px; background: #fff; border-radius: 10px; padding: 5px;
-    overflow-y: auto; border: 1px solid #aaa; font-size: 14px;
-  }
-  #inputChat {
-    width: 200px; font-size: 14px; padding: 5px; border-radius: 8px; border: 1px solid #aaa;
-  }
-  button {
-    padding: 5px 10px; font-weight: bold; border-radius: 8px; border: none; background: #4a90e2; color: white; cursor: pointer;
-  }
-  button:active {
-    background: #357ABD;
-  }
-  #names {
-    position: absolute; top: 0; width: 100%; display: flex; justify-content: space-around;
-    font-size: 18px; font-weight: bold; color: #222; margin-top: 5px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cita Virtual - Meliander & Mikianny</title>
+  <style>
+    body {
+      margin: 0;
+      background: url('https://i.imgur.com/miFFzBT.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 80vh;
+    }
+    .player {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background-size: cover;
+      font-size: 12px;
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+    }
+    #player1 {
+      background-image: url('https://i.imgur.com/oe4iKGe.png');
+      bottom: 50px;
+      left: 30px;
+    }
+    #player2 {
+      background-image: url('https://i.imgur.com/T5iAqy7.png');
+      bottom: 50px;
+      left: 150px;
+    }
+    #controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px;
+    }
+    .btn {
+      padding: 10px 20px;
+      background: #fff4;
+      border: 1px solid #fff;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+    #chatbox {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+    }
+    #chatInput {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+    #chatSend {
+      padding: 10px 20px;
+      font-weight: bold;
+      background: #ffffffaa;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #music {
+      display: none;
+    }
+    .bubble {
+      position: absolute;
+      bottom: 90px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 <body>
+  <audio id="music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/21/audio_3848e67191.mp3?filename=romantic-vibes-124386.mp3" type="audio/mpeg">
+  </audio>
 
-<div id="names">
-  <div>👦 Meliander</div>
-  <div>👧 Mikianny</div>
-</div>
+  <div id="game">
+    <div id="player1" class="player">Meliander</div>
+    <div id="player2" class="player">Mikianny</div>
+  </div>
 
-<div id="game">
-  <div id="player1" class="player">Meliander</div>
-  <div id="player2" class="player">Mikianny</div>
-</div>
+  <div id="controls">
+    <button class="btn" onclick="move('player1', -10)">⬅️ Meliander</button>
+    <button class="btn" onclick="move('player1', 10)">Meliander ➡️</button>
+    <button class="btn" onclick="move('player2', -10)">⬅️ Mikianny</button>
+    <button class="btn" onclick="move('player2', 10)">Mikianny ➡️</button>
+  </div>
 
-<div id="chat">
-  <input type="text" id="inputChat" placeholder="Escribe aquí..." />
-  <button id="sendBtn">Enviar</button>
-</div>
+  <div id="chatbox">
+    <input type="text" id="chatInput" placeholder="Escribe algo bonito..." />
+    <button id="chatSend">Enviar</button>
+  </div>
 
-<div id="messages"></div>
+  <script>
+    const player1 = document.getElementById('player1');
+    const player2 = document.getElementById('player2');
 
-<script>
-  const player1 = document.getElementById('player1');
-  const player2 = document.getElementById('player2');
-  const inputChat = document.getElementById('inputChat');
-  const sendBtn = document.getElementById('sendBtn');
-  const messages = document.getElementById('messages');
-
-  // Variables para posición de jugadores (solo local)
-  let p1Pos = 20;
-  let p2Pos = 100;
-
-  // Mover con teclas: A/D para chico, Flechas izquierda/derecha para chica
-  document.addEventListener('keydown', (e) => {
-    // Para Meliander (izq/derecha): A/D
-    if (e.key === 'a' || e.key === 'A') {
-      p1Pos = Math.max(0, p1Pos - 10);
-      player1.style.left = p1Pos + 'px';
-    } else if (e.key === 'd' || e.key === 'D') {
-      p1Pos = Math.min(window.innerWidth - 60, p1Pos + 10);
-      player1.style.left = p1Pos + 'px';
+    function move(playerId, amount) {
+      const player = document.getElementById(playerId);
+      const currentLeft = parseInt(player.style.left || '0');
+      let newLeft = currentLeft + amount;
+      if (newLeft < 0) newLeft = 0;
+      if (newLeft > window.innerWidth - 70) newLeft = window.innerWidth - 70;
+      player.style.left = newLeft + 'px';
     }
 
-    // Para Mikianny (izq/derecha): flecha izquierda/derecha
-    if (e.key === 'ArrowLeft') {
-      p2Pos = Math.max(0, p2Pos - 10);
-      player2.style.left = p2Pos + 'px';
-    } else if (e.key === 'ArrowRight') {
-      p2Pos = Math.min(window.innerWidth - 60, p2Pos + 10);
-      player2.style.left = p2Pos + 'px';
+    document.getElementById('chatSend').onclick = () => {
+      const text = document.getElementById('chatInput').value.trim();
+      if (!text) return;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = text;
+      const who = Math.random() < 0.5 ? player1 : player2;
+      who.appendChild(bubble);
+
+      setTimeout(() => {
+        who.removeChild(bubble);
+      }, 4000);
+
+      document.getElementById('chatInput').value = '';
+    };
+
+    // auto play music
+    window.onload = () => {
+      document.getElementById("music").play().catch(() => {});
     }
-  });
-
-  // Enviar mensaje local
-  function addMessage(text) {
-    const msg = document.createElement('div');
-    msg.textContent = text;
-    messages.appendChild(msg);
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  sendBtn.onclick = () => {
-    if(inputChat.value.trim() !== '') {
-      addMessage('Tú: ' + inputChat.value.trim());
-      inputChat.value = '';
-    }
-  };
-
-  // También enviar mensaje con Enter
-  inputChat.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendBtn.click();
-  });
-</script>
-
+  </script>
 </body>
 </html>
